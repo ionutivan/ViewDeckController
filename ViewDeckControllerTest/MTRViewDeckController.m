@@ -44,7 +44,7 @@
                rightViewController:(RightViewController *)rightViewController
                 leftViewController:(LeftViewController *)leftViewController {
   
-  if (self = [super initWithNibName:@"Empty" bundle:nil]) {
+  if (self = [super initWithNibName:nil bundle:nil]) {
     
     NSLog(@"init %@",NSStringFromCGRect(self.view.frame));
     
@@ -65,7 +65,7 @@
     
     self.leftViewController.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
                                                     CGRectGetMinY(referenceFrame),
-                                                    CGRectGetWidth(referenceFrame)/3.0,
+                                                    CGRectGetWidth(referenceFrame)/3,
                                                     CGRectGetHeight(referenceFrame));
     
     self.centerViewController.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
@@ -73,9 +73,9 @@
                                                       CGRectGetWidth(referenceFrame),
                                                       CGRectGetHeight(referenceFrame));
     
-    self.rightViewController.view.frame = CGRectMake(CGRectGetMaxX(referenceFrame)-CGRectGetWidth(referenceFrame)/3.0,
+    self.rightViewController.view.frame = CGRectMake(CGRectGetMaxX(referenceFrame),
                                                      CGRectGetMinY(referenceFrame),
-                                                     CGRectGetWidth(referenceFrame)/3.0,
+                                                     CGRectGetWidth(referenceFrame)/3,
                                                      CGRectGetHeight(referenceFrame));
     
     [self.view addSubview:self.leftViewController.view];
@@ -111,7 +111,15 @@
 - (void)viewDidAppear:(BOOL)animated {
   
   [super viewDidAppear:animated];
+  CGRect myRect = [self.view convertRect:self.view.frame toView:[[UIApplication sharedApplication].windows objectAtIndex:0]];
+  self.view.frame = CGRectMake(0,
+                               0,
+                               CGRectGetHeight(myRect),
+                               CGRectGetWidth(myRect));
   NSLog(@"viewDidAppear %@",NSStringFromCGRect(self.view.frame));
+  for (UIView *view in [self.view subviews]) {
+    NSLog(@"%@",NSStringFromCGRect(view.frame));
+  }
   
 }
 
@@ -124,24 +132,9 @@
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
-
-  NSLog(@"viewWillAppear %@",NSStringFromCGRect(self.view.frame));
   
+  NSLog(@"viewWillAppear %@",NSStringFromCGRect(self.view.frame));
 }
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
-
 
 - (RightViewController *)rightController {
   return _rightViewController;

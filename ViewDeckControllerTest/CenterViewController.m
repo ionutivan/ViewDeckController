@@ -8,6 +8,8 @@
 
 #import "CenterViewController.h"
 #import "MTRViewDeckController.h"
+#import "LeftViewController.h"
+#import "RightViewController.h"
 
 @interface CenterViewController ()
 
@@ -44,26 +46,45 @@
                         delay:0
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-                     self.view.frame = CGRectMake(CGRectGetWidth(self.view.frame)/3, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+                     CGRect referenceFrame = _deckController.view.frame;
+                     [[self deckController] leftController].view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
+                                                                                    CGRectGetMinY(referenceFrame),
+                                                                                    CGRectGetWidth(referenceFrame)/3,
+                                                                                    CGRectGetHeight(referenceFrame));
+                      
+                     
+                     self.view.frame = CGRectMake(CGRectGetMaxX([[self deckController] leftController].view.frame),
+                                                  CGRectGetMinY(referenceFrame),
+                                                  CGRectGetWidth(referenceFrame),
+                                                  CGRectGetHeight(referenceFrame));
+                   }
+                   completion:^(BOOL finished) {
+                     CGRect referenceFrame = _deckController.view.frame;
+                     NSLog(@"openLeft %@",NSStringFromCGRect(referenceFrame));
+                   }]; 
+}
+
+- (IBAction)buttonActionRight:(id)sender {
+  [UIView animateWithDuration:0.5
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     CGRect referenceFrame = _deckController.view.frame;
+                     self.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
+                                                  CGRectGetMinY(referenceFrame),
+                                                  CGRectGetWidth(referenceFrame),
+                                                  CGRectGetHeight(referenceFrame));
+                     
+                     [[self deckController] leftController].view.frame = CGRectMake(CGRectGetMaxX(referenceFrame)-CGRectGetWidth([[self deckController] rightController].view.frame),
+                                                                                    CGRectGetMinY(referenceFrame),
+                                                                                    CGRectGetWidth(referenceFrame)/3,
+                                                                                    CGRectGetHeight(referenceFrame));
+                     
+                     
                    }
                    completion:^(BOOL finished) {
                      
                    }];
- 
-//  [self transitionFromViewController:self
-//                    toViewController:(UIViewController *)[self.deckController leftController]
-//                            duration:0.5
-//                             options:UIViewAnimationOptionCurveEaseInOut
-//                          animations:^{
-//                            self.view.frame = CGRectMake(200, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
-//                          }
-//                          completion:^(BOOL finished) {
-//                            
-//                          }];
-}
-
-- (IBAction)buttonActionRight:(id)sender {
-  
 }
 
 @end
