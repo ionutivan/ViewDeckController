@@ -42,49 +42,42 @@
 }
 
 - (IBAction)buttonActionLeft:(id)sender {
-  [UIView animateWithDuration:0.5
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     CGRect referenceFrame = _deckController.view.frame;
-                     [[self deckController] leftController].view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
-                                                                                    CGRectGetMinY(referenceFrame),
-                                                                                    CGRectGetWidth(referenceFrame)/3,
-                                                                                    CGRectGetHeight(referenceFrame));
-                      
-                     
-                     self.view.frame = CGRectMake(CGRectGetMaxX([[self deckController] leftController].view.frame),
-                                                  CGRectGetMinY(referenceFrame),
-                                                  CGRectGetWidth(referenceFrame),
-                                                  CGRectGetHeight(referenceFrame));
-                   }
-                   completion:^(BOOL finished) {
-                     CGRect referenceFrame = _deckController.view.frame;
-                     NSLog(@"openLeft %@",NSStringFromCGRect(referenceFrame));
-                   }]; 
+  
+  RightViewController *rightPanel = [[self deckController] rightController];
+  LeftViewController *leftPanel = [[self deckController] leftController];
+  
+  if ([leftPanel isOpen]) {
+    [leftPanel close:nil];
+  } else {
+    //close right panel
+    if ([rightPanel isOpen]) {
+      [rightPanel close:nil];
+    }
+    //open left panel
+    [leftPanel open:nil];
+  }
+  
 }
 
 - (IBAction)buttonActionRight:(id)sender {
-  [UIView animateWithDuration:0.5
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     CGRect referenceFrame = _deckController.view.frame;
-                     self.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
-                                                  CGRectGetMinY(referenceFrame),
-                                                  CGRectGetWidth(referenceFrame),
-                                                  CGRectGetHeight(referenceFrame));
-                     
-                     [[self deckController] leftController].view.frame = CGRectMake(CGRectGetMaxX(referenceFrame)-CGRectGetWidth([[self deckController] rightController].view.frame),
-                                                                                    CGRectGetMinY(referenceFrame),
-                                                                                    CGRectGetWidth(referenceFrame)/3,
-                                                                                    CGRectGetHeight(referenceFrame));
-                     
-                     
-                   }
-                   completion:^(BOOL finished) {
-                     
-                   }];
+  
+  RightViewController *rightPanel = [[self deckController] rightController];
+  LeftViewController *leftPanel = [[self deckController] leftController];
+  
+  if ([rightPanel isOpen]) {
+    //close right panel
+    [rightPanel close:nil];
+  } else {
+      //close left panel if open
+    if ([leftPanel isOpen]) {
+      [leftPanel close:nil];
+    }
+    
+      //open right panel
+    [rightPanel open:nil];
+  }
+  
+  
 }
 
 @end

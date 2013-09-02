@@ -13,6 +13,10 @@
 
 @interface MTRViewDeckController : UIViewController
 
+@property (nonatomic, weak) IBOutlet UIView *rightView;
+@property (nonatomic, weak) IBOutlet UIView *leftView;
+@property (nonatomic, weak) IBOutlet UIView *centerView;
+
 - (id)initWithCenterViewController:(UIViewController *)centerViewController
                rightViewController:(UIViewController *)rightViewController
                 leftViewController:(UIViewController *)leftViewController;

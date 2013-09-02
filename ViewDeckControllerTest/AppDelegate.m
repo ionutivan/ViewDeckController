@@ -25,15 +25,27 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   [[UIApplication sharedApplication] setStatusBarHidden:YES];
-  LeftViewController *leftVC = [[LeftViewController alloc] initWithNibName:NSStringFromClass([LeftViewController class]) bundle:nil];
+  LeftViewController *leftVC = [[LeftViewController alloc] initWithNibName:NSStringFromClass([LeftViewController class])
+                                                                    bundle:nil
+                                                                constraint:405];
   
-  CenterViewController *centerVC = [[CenterViewController alloc] initWithNibName:NSStringFromClass([CenterViewController class]) bundle:nil];
+  CenterViewController *centerVC = [[CenterViewController alloc] initWithNibName:NSStringFromClass([CenterViewController class])
+                                                                          bundle:nil];
   
-  RightViewController *rightVC = [[RightViewController alloc] initWithNibName:NSStringFromClass([RightViewController class]) bundle:nil];
+  RightViewController *rightVC = [[RightViewController alloc] initWithNibName:NSStringFromClass([RightViewController class])
+                                                                       bundle:nil
+                                                                   constraint:405];
   
-  self.viewDeckController = [[MTRViewDeckController alloc] initWithCenterViewController:centerVC
-                                                                    rightViewController:rightVC
-                                                                     leftViewController:leftVC];
+  UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:leftVC];
+  
+  UINavigationController *rightNavigationController = [[UINavigationController alloc] initWithRootViewController:rightVC];
+  
+  UINavigationController *centerNavigationController = [[UINavigationController alloc] initWithRootViewController:centerVC];
+  
+  
+  self.viewDeckController = [[MTRViewDeckController alloc] initWithCenterViewController:centerNavigationController
+                                                                    rightViewController:rightNavigationController
+                                                                     leftViewController:leftNavigationController];
 
   
 

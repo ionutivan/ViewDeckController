@@ -10,6 +10,7 @@
 #import "RightViewController.h"
 #import "CenterViewController.h"
 #import "LeftViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MTRViewDeckController ()
 
@@ -40,61 +41,38 @@
   
 }
 
-- (id)initWithCenterViewController:(CenterViewController *)centerViewController
-               rightViewController:(RightViewController *)rightViewController
-                leftViewController:(LeftViewController *)leftViewController {
+- (id)initWithCenterViewController:(UIViewController *)centerViewController
+               rightViewController:(UIViewController *)rightViewController
+                leftViewController:(UIViewController *)leftViewController {
   
-  if (self = [super initWithNibName:nil bundle:nil]) {
+  if (self = [super initWithNibName:@"MTRViewDeck" bundle:nil]) {
     
-    NSLog(@"init %@",NSStringFromCGRect(self.view.frame));
+    if ([leftViewController isKindOfClass:[UINavigationController class]]) {
+      self.leftViewController = [[(UINavigationController *)leftViewController viewControllers] objectAtIndex:0];
+    } else {
+        self.leftViewController = (LeftViewController *)leftViewController;
+    }
     
-    self.leftViewController = leftViewController;
-    self.centerViewController = centerViewController;
-    self.rightViewController = rightViewController;
+    if ([centerViewController isKindOfClass:[UINavigationController class]]) {
+      self.centerViewController = [[(UINavigationController *)centerViewController viewControllers] objectAtIndex:0];
+    } else {
+      self.centerViewController = (CenterViewController *)centerViewController;
+    }
+    
+    if ([rightViewController isKindOfClass:[UINavigationController class]]) {
+      self.rightViewController = [[(UINavigationController *)rightViewController viewControllers] objectAtIndex:0];
+    } else {
+      self.rightViewController = (RightViewController *)rightViewController;
+    }
     
     self.rightViewController.deckController = self;
     self.leftViewController.deckController = self;
     self.centerViewController.deckController = self;
     
-    CGRect referenceFrame = self.view.frame;
-    
-
     _rightViewController.view.backgroundColor = [UIColor redColor];
     _leftViewController.view.backgroundColor = [UIColor blueColor];
     _centerViewController.view.backgroundColor = [UIColor greenColor];
-    
-    self.leftViewController.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
-                                                    CGRectGetMinY(referenceFrame),
-                                                    CGRectGetWidth(referenceFrame)/3,
-                                                    CGRectGetHeight(referenceFrame));
-    
-    self.centerViewController.view.frame = CGRectMake(CGRectGetMinX(referenceFrame),
-                                                      CGRectGetMinY(referenceFrame),
-                                                      CGRectGetWidth(referenceFrame),
-                                                      CGRectGetHeight(referenceFrame));
-    
-    self.rightViewController.view.frame = CGRectMake(CGRectGetMaxX(referenceFrame),
-                                                     CGRectGetMinY(referenceFrame),
-                                                     CGRectGetWidth(referenceFrame)/3,
-                                                     CGRectGetHeight(referenceFrame));
-    
-    [self.view addSubview:self.leftViewController.view];
-    [self addChildViewController:self.leftViewController];
-    [self.leftViewController didMoveToParentViewController:self];
-    NSLog(@"left %@",NSStringFromCGRect(self.leftViewController.view.frame));
-
-    
-    
-    [self.view addSubview:self.centerViewController.view];
-    [self addChildViewController:self.centerViewController];
-    [self.centerViewController didMoveToParentViewController:self];
-    NSLog(@"center %@",NSStringFromCGRect(self.centerViewController.view.frame));
-    
-    [self.view addSubview:self.rightViewController.view];
-    [self addChildViewController:self.rightViewController];
-    [self.rightViewController didMoveToParentViewController:self];
-    NSLog(@"right %@",NSStringFromCGRect(self.rightViewController.view.frame));
-    
+        
   }
   
   return self;
@@ -104,22 +82,44 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  NSLog(@"viewDidLoad %@",NSStringFromCGRect(self.view.frame));
+  
+  if (self.leftViewController.viewWidth > -1) {
+    [self.leftView setFrame:CGRectMake(CGRectGetMinX(self.leftView.frame),
+                                       CGRectGetMinY(self.leftView.frame),
+                                       self.leftViewController.viewWidth,
+                                       CGRectGetHeight(self.leftView.frame))];
+  }
+  [self.leftView addSubview:self.leftViewController.navigationController.view];
+  [self addChildViewController:self.leftViewController.navigationController];
+  self.leftViewController.open = NO;
+  [self.leftViewController.navigationController didMoveToParentViewController:self];
+  NSLog(@"left %@",NSStringFromCGRect(self.leftViewController.view.frame));
+  
+  if (self.rightViewController.viewWidth > -1) {
+    [self.rightView setFrame:CGRectMake(CGRectGetMinX(self.rightView.frame),
+                                        CGRectGetMinY(self.rightView.frame),
+                                        self.rightViewController.viewWidth,
+                                        CGRectGetHeight(self.rightView.frame))];
+  }
+  [self.rightView addSubview:self.rightViewController.navigationController.view];
+  [self addChildViewController:self.rightViewController.navigationController];
+  self.rightViewController.open = NO;
+  [self.rightViewController.navigationController didMoveToParentViewController:self];
+  NSLog(@"right %@",NSStringFromCGRect(self.rightViewController.view.frame));
+  
+  [self.centerView addSubview:self.centerViewController.navigationController.view];
+  [self addChildViewController:self.centerViewController.navigationController];
+  [self.centerViewController.navigationController didMoveToParentViewController:self];
+  NSLog(@"center %@",NSStringFromCGRect(self.centerViewController.view.frame));
+  
 	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   
   [super viewDidAppear:animated];
-  CGRect myRect = [self.view convertRect:self.view.frame toView:[[UIApplication sharedApplication].windows objectAtIndex:0]];
-  self.view.frame = CGRectMake(0,
-                               0,
-                               CGRectGetHeight(myRect),
-                               CGRectGetWidth(myRect));
+  
   NSLog(@"viewDidAppear %@",NSStringFromCGRect(self.view.frame));
-  for (UIView *view in [self.view subviews]) {
-    NSLog(@"%@",NSStringFromCGRect(view.frame));
-  }
   
 }
 
@@ -132,8 +132,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
-  
-  NSLog(@"viewWillAppear %@",NSStringFromCGRect(self.view.frame));
+
 }
 
 - (RightViewController *)rightController {

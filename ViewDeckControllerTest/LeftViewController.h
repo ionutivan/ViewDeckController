@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MTRViewDeckController.h"
+#import "PanelViewController.h"
 
-@interface LeftViewController : UIViewController
-
-@property (nonatomic, weak) MTRViewDeckController *deckController;
+@interface LeftViewController : UIViewController <PanelViewController>
 
 @end

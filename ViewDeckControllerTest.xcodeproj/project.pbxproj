@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C64B722C17D488E000221C45 /* MTRViewDeck.xib in Resources */ = {isa = PBXBuildFile; fileRef = C64B722B17D488E000221C45 /* MTRViewDeck.xib */; };
+		C64B722F17D4D5CE00221C45 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C64B722E17D4D5CE00221C45 /* QuartzCore.framework */; };
 		C67B2ECD17CB4DD800F7FA0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C67B2ECC17CB4DD800F7FA0F /* UIKit.framework */; };
 		C67B2ECF17CB4DD800F7FA0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C67B2ECE17CB4DD800F7FA0F /* Foundation.framework */; };
 		C67B2ED117CB4DD800F7FA0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C67B2ED017CB4DD800F7FA0F /* CoreGraphics.framework */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C64B722B17D488E000221C45 /* MTRViewDeck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MTRViewDeck.xib; sourceTree = "<group>"; };
+		C64B722D17D4AA2200221C45 /* PanelViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
+		C64B722E17D4D5CE00221C45 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C67B2EC917CB4DD800F7FA0F /* ViewDeckControllerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewDeckControllerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C67B2ECC17CB4DD800F7FA0F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C67B2ECE17CB4DD800F7FA0F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C64B722F17D4D5CE00221C45 /* QuartzCore.framework in Frameworks */,
 				C67B2ECD17CB4DD800F7FA0F /* UIKit.framework in Frameworks */,
 				C67B2ECF17CB4DD800F7FA0F /* Foundation.framework in Frameworks */,
 				C67B2ED117CB4DD800F7FA0F /* CoreGraphics.framework in Frameworks */,
@@ -100,6 +106,7 @@
 		C67B2EC017CB4DD800F7FA0F = {
 			isa = PBXGroup;
 			children = (
+				C64B722E17D4D5CE00221C45 /* QuartzCore.framework */,
 				C67B2ED217CB4DD800F7FA0F /* ViewDeckControllerTest */,
 				C67B2EF617CB4DD800F7FA0F /* ViewDeckControllerTestTests */,
 				C67B2ECB17CB4DD800F7FA0F /* Frameworks */,
@@ -134,6 +141,7 @@
 				C67B2EDC17CB4DD800F7FA0F /* AppDelegate.m */,
 				C67B2F0717CB4E3000F7FA0F /* MTRViewDeckController.h */,
 				C67B2F0817CB4E3000F7FA0F /* MTRViewDeckController.m */,
+				C64B722B17D488E000221C45 /* MTRViewDeck.xib */,
 				C695CBFD17CB8CB00078CA94 /* RightViewController.h */,
 				C695CBFE17CB8CB00078CA94 /* RightViewController.m */,
 				C695CBFF17CB8CB00078CA94 /* RightViewController.xib */,
@@ -143,6 +151,7 @@
 				C695CC0717CB8CCB0078CA94 /* CenterViewController.h */,
 				C695CC0817CB8CCB0078CA94 /* CenterViewController.m */,
 				C695CC0917CB8CCB0078CA94 /* CenterViewController.xib */,
+				C64B722D17D4AA2200221C45 /* PanelViewController.h */,
 				C67B2ED317CB4DD800F7FA0F /* Supporting Files */,
 			);
 			path = ViewDeckControllerTest;
@@ -259,6 +268,7 @@
 				C695CC0117CB8CB00078CA94 /* RightViewController.xib in Resources */,
 				C695CC0617CB8CBC0078CA94 /* LeftViewController.xib in Resources */,
 				C695CC0B17CB8CCB0078CA94 /* CenterViewController.xib in Resources */,
+				C64B722C17D488E000221C45 /* MTRViewDeck.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
